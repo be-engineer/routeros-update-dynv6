@@ -1,0 +1,18 @@
+:local ddnsif "ether1-lan"
+:local ddnspool "ipv6"
+#dynv6的域名
+:local domainname "domain.dynv6"
+:local token "xxx"
+#获取IPV6地址,方法1
+:local IPV6 [ /ipv6 address get [ /ipv6 address find interface=$ddnsif  from-pool=$ddnspool ] address ]
+:set IPV6 [:pick $IPV6 0 ([len $IPV6] -3)]
+:put $IPV6
+#获取IPV6地址,方法2
+#:foreach i in=[/ipv6 address find where global] do={
+#:local addr [/ipv6 address get $i address]
+#:local IPV6 [:pick $addr 0 [:find $addr "/"]]
+#:put $IPV6}
+#update ipv6
+:put $domainname
+/tool fetch url="https://dynv6.com/api/update?hostname=$domainname&token=$token&ipv6=$IPV6" 
+:log info "IPV6 Update: $domainname - $IPV6"
