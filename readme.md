@@ -1,0 +1,1 @@
+routeros->system-script添加该脚本并设计计划自动更新dynv6的ddns ip地址
